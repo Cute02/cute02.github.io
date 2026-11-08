@@ -421,47 +421,44 @@ export default function SinglePagePortfolio() {
             </div>
           </div>
 
-          {/* Buildathons & Honors */}
+          {/* Buildathons & Competitive Sprints */}
           <div className="space-y-8">
             <SectionReveal>
               <div className="flex items-center justify-between font-mono text-xs text-cyan-400 pb-2 border-b border-white/5">
                 <span className="font-bold flex items-center gap-2">
                   <Award className="w-4 h-4" />
-                  <span>[ 02 // BUILDATHONS &amp; HONORS ]</span>
+                  <span>[ 02 // BUILDATHONS &amp; COMPETITIVE SPRINTS ]</span>
                 </span>
                 <span className="text-slate-400">COMPETITIVE SPRINT EXPERIENCE</span>
               </div>
             </SectionReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
               {achievementsList.map((item, idx) => (
                 <SectionReveal key={item.id} delay={idx * 0.08}>
-                  <div className="rounded-xl border border-white/10 bg-[#0d0d14] p-6 hover:border-cyan-500/40 transition-colors group">
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="text-xs font-mono text-cyan-400 font-bold">
-                        {item.year} // {item.type.toUpperCase()}
-                      </span>
+                  <div className="rounded-xl border border-white/10 bg-[#0d0d14] p-6 sm:p-8 hover:border-cyan-500/40 transition-colors group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-56 h-56 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-mono text-cyan-400 font-bold px-2.5 py-1 rounded bg-cyan-950/50 border border-cyan-500/30">
+                          {item.year} // {item.type.toUpperCase()}
+                        </span>
+                        <div className="text-xs font-mono text-slate-400">
+                          Organized by: <span className="text-slate-200 font-semibold">{item.organization}</span>
+                        </div>
+                      </div>
 
-                      <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold ${
-                          item.requiresConfirmation
-                            ? "bg-amber-950/40 text-amber-300 border border-amber-500/30"
-                            : "bg-cyan-950/40 text-cyan-300 border border-cyan-500/30"
-                        }`}
-                      >
-                        <FileBadge className="w-3.5 h-3.5" />
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-950/40 text-cyan-300 border border-cyan-500/30">
+                        <FileBadge className="w-3.5 h-3.5 text-cyan-400" />
                         <span>{item.statusBadge}</span>
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-2">
                       {item.title}
                     </h3>
-                    <div className="text-xs font-mono text-slate-400 mb-3">
-                      Organized by: {item.organization}
-                    </div>
 
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p className="text-sm text-slate-300 leading-relaxed max-w-3xl">
                       {item.description}
                     </p>
                   </div>

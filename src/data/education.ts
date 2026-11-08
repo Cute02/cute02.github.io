@@ -100,25 +100,5 @@ export const achievementsList: AchievementItem[] = [
       "Participated in the competitive engineering buildathon conducted collaboratively by HireD and Brototype, designing and implementing rapid technical solutions under time-constrained sprint conditions.",
     statusBadge: "Verified Participant",
   },
-  {
-    id: "academic-distinction-10",
-    title: "Academic Distinction — Class X (95.6%)",
-    organization: "Marello Public School",
-    year: "2024",
-    type: "Academic",
-    description:
-      "Graduated in the top tier with a 95.6% distinction mark, demonstrating rigorous analytical and STEM capability.",
-    statusBadge: "95.6% Distinction",
-  },
-  {
-    id: "academic-distinction-12",
-    title: "Academic Distinction — Class XII Computer Science (86.4%)",
-    organization: "Assisi Vidyaniketan Public School",
-    year: "2026",
-    type: "Academic",
-    description:
-      "Completed Higher Secondary Computer Science stream with distinction (86.4%).",
-    statusBadge: "86.4% Distinction",
-  },
 ];
 
