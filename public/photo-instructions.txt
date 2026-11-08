@@ -1,0 +1,3 @@
+<!-- Photo placeholder note -->
+<!-- Place your actual photo as photo.jpg in this public folder -->
+
