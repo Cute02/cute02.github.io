@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { stackData, stackCategories, StackItem } from "@/data/stack";
-import { Sparkles, BookOpen, Layers, Terminal } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 interface NodePoint {
   item: StackItem;
@@ -452,50 +452,88 @@ export function ConstellationGraph() {
         </div>
       </div>
 
-      {/* Grid of Nodes in Selected Category */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
-        {filteredItems.map((item) => (
-          <div
-            key={item.name}
-            onMouseEnter={() => setActiveItem(item)}
-            onMouseLeave={() => setActiveItem(null)}
-            className={`group rounded-xl border p-4 transition-all duration-300 ${
-              activeItem?.name === item.name
-                ? "border-cyan-500 bg-cyan-950/20 shadow-[0_0_20px_rgba(0,212,255,0.25)] ring-1 ring-cyan-500/50"
-                : "border-white/10 bg-[#0e0e14] hover:border-cyan-500/40"
-            }`}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <span className="text-cyan-400 font-mono text-xs">◆</span>
-                <span className="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors">
-                  {item.name}
+      {/* 6 Featured Core Skills — most critical for AI Engineer & Full-Stack Dev roles */}
+      <div className="pt-4">
+        <div className="flex items-center gap-2 font-mono text-[11px] text-cyan-400 mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="font-bold tracking-wider">CORE COMPETENCIES // AI ENGINEER · FULL-STACK DEV</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            {
+              name: "LLM Agents",
+              icon: "🤖",
+              category: "AI & LLM",
+              desc: "Autonomous agent loops, tool-calling pipelines, and goal-directed AI workflows.",
+              why: "Core AI Engineering",
+            },
+            {
+              name: "Python",
+              icon: "🐍",
+              category: "ML & Data",
+              desc: "Primary language for ML pipelines, agent architectures, and data manipulation.",
+              why: "Universal Foundation",
+            },
+            {
+              name: "Hugging Face Transformers",
+              icon: "🤗",
+              category: "AI & LLM",
+              desc: "Pre-trained BERT & Transformer models for NLP tasks — used in Mitra (GoEmotions).",
+              why: "NLP Engineering",
+            },
+            {
+              name: "Text-to-SQL",
+              icon: "🗄️",
+              category: "AI & LLM",
+              desc: "Natural language → schema-valid SQL. Core of the Delulu agent project.",
+              why: "AI × Data",
+            },
+            {
+              name: "scikit-learn",
+              icon: "📊",
+              category: "ML & Data",
+              desc: "Supervised ML — classification, regression, preprocessing, leakage-free pipelines.",
+              why: "Classical ML",
+            },
+            {
+              name: "LangChain",
+              icon: "⛓️",
+              category: "AI & LLM",
+              desc: "Composing LLM chains, retrievers, and document loaders for production AI apps.",
+              why: "LLM Orchestration",
+            },
+          ].map((skill) => (
+            <div
+              key={skill.name}
+              className="group relative rounded-xl border border-white/10 bg-[#0d0d14] p-5 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,212,255,0.12)] overflow-hidden"
+            >
+              {/* Subtle glow accent */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-400/5 blur-2xl rounded-full pointer-events-none" />
+
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xl leading-none">{skill.icon}</span>
+                  <span className="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors">
+                    {skill.name}
+                  </span>
+                </div>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-cyan-950/40 text-cyan-400 border border-cyan-500/40 shrink-0">
+                  <Sparkles className="w-2.5 h-2.5" />
+                  Core
                 </span>
               </div>
 
-              {item.status === "Learning" ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amber-950/40 text-amber-300 border border-amber-500/30">
-                  <BookOpen className="w-2.5 h-2.5" />
-                  <span>Learning</span>
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-cyan-950/40 text-cyan-400 border border-cyan-500/40">
-                  <Sparkles className="w-2.5 h-2.5" />
-                  <span>Core</span>
-                </span>
-              )}
-            </div>
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                {skill.desc}
+              </p>
 
-            <p className="mt-2.5 text-xs text-slate-300 leading-relaxed">
-              {item.description}
-            </p>
-
-            <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400">
-              <span className="text-slate-400">{item.category}</span>
-              <span className="text-cyan-500/80 font-semibold">VERIFIED USAGE</span>
+              <div className="flex items-center justify-between text-[10px] font-mono pt-2.5 border-t border-white/5">
+                <span className="text-slate-500">{skill.category}</span>
+                <span className="text-cyan-500 font-semibold">{skill.why}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
