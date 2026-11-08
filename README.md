@@ -1,20 +1,22 @@
-# Mary Neha — Portfolio & Technical Dossier
+# Mary Neha — Single-Page Portfolio & Technical Dossier
 
 > **AI Solution Builder · ML Engineer in training**  
-> Modern, high-performance portfolio website engineered with Next.js (App Router), TypeScript, Tailwind CSS, React Three Fiber (R3F), GSAP, and Framer Motion. Configured for static export and GitHub Pages hosting in an **Obsidian Dark & Electric Cyan (`#00D4FF`)** theme.
+> Modern, ultra-responsive single-page portfolio website engineered with Next.js (App Router), TypeScript, Tailwind CSS, React Three Fiber (R3F), GSAP, and Framer Motion. Built with a unified smooth-scrolling single-page architecture, scrollspy navigation, in-page case study modals, and configured for static export and GitHub Pages hosting in an **Obsidian Dark & Electric Cyan (`#00D4FF`)** theme.
 
 ---
 
-## ⚡ Tech Stack & Highlights
+## ⚡ Tech Stack & Architecture Highlights
 
+- **Architecture**: Unified Single-Page Application (SPA) with smooth hash scrolling (`#hero`, `#about`, `#projects`, `#delulu`, `#stack`, `#education`, `#contact`) and automatic ScrollSpy navbar highlighting.
+- **In-Page Case Study Modals**: Complete project deep-dives (problem, approach, architecture notes, highlights) open directly in an interactive cyber modal without leaving the page.
 - **Framework**: Next.js 14 (App Router, Static Export `output: 'export'`)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS with custom Obsidian & Electric Cyan tokens
-- **Full-Width 3D Word Embedding Simulation**: Interactive wide 3D vector space across the hero (modeled after Word2Vec 3D demos) featuring real-time mathematical **Cosine Similarity calculation** $\cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|}$, OrbitControls (drag to rotate, wheel to zoom), dynamic laser vector chords, and nearest neighbor ranking.
+- **Full-Width 3D Word Embedding Universe**: Interactive wide 3D vector space across the hero (modeled after Word2Vec 3D demos) featuring real-time mathematical **Cosine Similarity calculation** $\cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|}$, OrbitControls (drag to rotate, wheel to zoom), dynamic laser vector chords, and nearest neighbor ranking.
 - **Developer Flex Playground**: Live interactive Delulu Text-to-SQL AST simulator
 - **Smooth Scroll**: Lenis (`@studio-freight/lenis` / `lenis`)
 - **Animations**: Framer Motion & GSAP ScrollTrigger
-- **Database / Inbound**: Supabase JS client (`@supabase/supabase-js`, insert-only with honeypot spam protection)
+- **Database / Inbound**: Supabase JS client (`@supabase/supabase-js`, insert-only with honeypot spam protection, rate limiting, and input sanitization)
 - **Accessibility**: WCAG AA contrast compliant, `prefers-reduced-motion` respected across all 3D/animation layers
 
 ---
