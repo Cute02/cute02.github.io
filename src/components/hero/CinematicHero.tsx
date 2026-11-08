@@ -164,7 +164,7 @@ export function CinematicHero() {
 
       {/* FULL-WIDTH IMMERSIVE 3D WORD EMBEDDING UNIVERSE */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-3">
-        <div className="relative w-full h-[520px] sm:h-[600px] lg:h-[640px] rounded-2xl border border-white/10 bg-[#06080E]/90 overflow-hidden shadow-2xl">
+        <div className="relative w-full h-[580px] sm:h-[600px] lg:h-[640px] rounded-2xl border border-white/10 bg-[#06080E]/90 overflow-hidden shadow-2xl">
           {/* Subtle Ambient Background Watermark Text ("NEHA") */}
           <div
             aria-hidden="true"
