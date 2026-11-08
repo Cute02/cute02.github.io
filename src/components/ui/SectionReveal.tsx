@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, type ReactNode } from "react";
+import { motion } from "framer-motion";
+import { type ReactNode, useEffect, useState } from "react";
 
 interface SectionRevealProps {
   children: ReactNode;
@@ -16,36 +16,39 @@ export function SectionReveal({
   delay = 0,
   direction = "up",
 }: SectionRevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const [mounted, setMounted] = useState(false);
 
-  const getInitialPosition = () => {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const getOffset = () => {
     switch (direction) {
       case "up":
-        return { opacity: 0, y: 30 };
+        return { y: 16 };
       case "down":
-        return { opacity: 0, y: -30 };
+        return { y: -16 };
       case "left":
-        return { opacity: 0, x: 30 };
+        return { x: 16 };
       case "right":
-        return { opacity: 0, x: -30 };
+        return { x: -16 };
       case "none":
-        return { opacity: 0 };
+        return {};
     }
   };
 
+  // During SSR / initial HTML prerendering, render directly so pages are never blank
+  if (!mounted) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
-      ref={ref}
-      initial={getInitialPosition()}
-      animate={
-        isInView
-          ? { opacity: 1, y: 0, x: 0 }
-          : getInitialPosition()
-      }
+      initial={{ opacity: 0, ...getOffset() }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{
-        duration: 0.65,
-        delay,
+        duration: 0.45,
+        delay: Math.min(delay, 0.3),
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
       className={className}
@@ -64,34 +67,37 @@ export function SplitTextReveal({
   className?: string;
   tag?: "h1" | "h2" | "h3";
 }) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-20px" });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const Component = tag;
+
+  if (!mounted) {
+    return <Component className={className}>{text}</Component>;
+  }
 
   const words = text.split(" ");
-  const Component = motion[tag];
 
   return (
-    <Component
-      ref={ref}
-      className={`flex flex-wrap items-center gap-x-2.5 overflow-hidden ${className}`}
-    >
+    <Component className={`flex flex-wrap items-center gap-x-2.5 ${className}`}>
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden">
-          <motion.span
-            className="inline-block"
-            initial={{ y: "110%", opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : { y: "110%", opacity: 0 }}
-            transition={{
-              duration: 0.55,
-              delay: i * 0.05,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            {word}
-          </motion.span>
-        </span>
+        <motion.span
+          key={i}
+          className="inline-block"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.3,
+            delay: i * 0.02,
+            ease: "easeOut",
+          }}
+        >
+          {word}
+        </motion.span>
       ))}
     </Component>
   );
 }
-

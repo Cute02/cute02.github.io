@@ -127,6 +127,8 @@ export default function RootLayout({
       className={`dark ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable}`}
     >
       <head>
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

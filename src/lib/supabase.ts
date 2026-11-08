@@ -20,30 +20,45 @@ export interface ContactMessagePayload {
   message: string;
 }
 
+// Defensive payload sanitization to prevent injection & payload bloat
+function sanitizeInput(str: string, maxLength: number): string {
+  if (!str) return "";
+  return str
+    .slice(0, maxLength)
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "") // strip control characters
+    .trim();
+}
+
 export async function sendContactMessage(payload: ContactMessagePayload) {
+  // Enforce defensive length limits before transmission
+  const sanitized = {
+    name: sanitizeInput(payload.name, 80),
+    email: sanitizeInput(payload.email, 100),
+    subject: sanitizeInput(payload.subject || "Portfolio Inbound Inquiry", 120),
+    message: sanitizeInput(payload.message, 2500),
+  };
+
   if (isSupabaseConfigured && supabase) {
     const { error } = await supabase
       .from("contact_messages")
       .insert([
         {
-          name: payload.name,
-          email: payload.email,
-          subject: payload.subject,
-          message: payload.message,
+          name: sanitized.name,
+          email: sanitized.email,
+          subject: sanitized.subject,
+          message: sanitized.message,
           created_at: new Date().toISOString(),
         },
       ]);
     if (error) throw error;
     return { success: true, mode: "supabase" as const };
   } else {
-    // Graceful offline/preview fallback when Supabase keys are not set yet
+    // Safe offline/preview fallback when Supabase keys are not set yet
     console.info(
-      "[Supabase Preview Mode] Contact form submitted successfully (stored in local preview log):",
-      payload
+      "[Supabase Preview Mode] Contact form submitted safely:",
+      sanitized
     );
-    // Simulate brief network latency for realistic feedback
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 600));
     return { success: true, mode: "simulated" as const };
   }
 }
-

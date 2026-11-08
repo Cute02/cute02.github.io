@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { sendContactMessage } from "@/lib/supabase";
 import confetti from "canvas-confetti";
 import { Send, CheckCircle2, AlertCircle, Loader2, ShieldCheck, Mail } from "lucide-react";
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ export function ContactForm() {
   const [feedbackMode, setFeedbackMode] = useState<"supabase" | "simulated" | null>(
     null
   );
+  const lastSubmitTimeRef = useRef<number>(0);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,8 +39,16 @@ export function ContactForm() {
 
     // Honeypot check: If the hidden honeypot field is filled, silently discard bot spam
     if (formData.honeypot) {
-      console.warn("Honeypot triggered. Discarding submission.");
+      console.warn("Security Honeypot triggered. Bot dispatch discarded.");
       setStatus("success");
+      return;
+    }
+
+    // Client-side rate limiting / cooldown (1 submission every 4 seconds)
+    const now = Date.now();
+    if (now - lastSubmitTimeRef.current < 4000) {
+      setStatus("error");
+      setErrorMessage("Transmission rate limit active. Please wait 4 seconds before resending.");
       return;
     }
 
@@ -47,8 +58,15 @@ export function ContactForm() {
       return;
     }
 
+    if (!EMAIL_REGEX.test(formData.email.trim())) {
+      setStatus("error");
+      setErrorMessage("Please provide a valid email address (e.g. name@domain.com).");
+      return;
+    }
+
     setStatus("loading");
     setErrorMessage("");
+    lastSubmitTimeRef.current = now;
 
     try {
       const res = await sendContactMessage({
@@ -110,7 +128,7 @@ export function ContactForm() {
           </p>
           {feedbackMode === "simulated" && (
             <p className="text-[11px] font-mono text-cyan-300/90 max-w-sm mx-auto bg-cyan-950/30 p-2.5 rounded border border-cyan-500/30">
-              [Preview Mode Active]: Message logged locally. To connect live Supabase DB, supply NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.
+              [Preview Mode Active]: Message logged safely. To connect live Supabase DB, supply NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.
             </p>
           )}
           <button
@@ -123,7 +141,7 @@ export function ContactForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Honeypot field */}
+          {/* Honeypot field (hidden from genuine users, traps malicious spam bots) */}
           <div className="hidden" aria-hidden="true">
             <label htmlFor="honeypot">Leave this blank</label>
             <input
@@ -151,6 +169,7 @@ export function ContactForm() {
                 id="name"
                 name="name"
                 required
+                maxLength={80}
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Ada Lovelace"
@@ -171,6 +190,7 @@ export function ContactForm() {
                 id="email"
                 name="email"
                 required
+                maxLength={100}
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="ada@domain.com"
@@ -191,6 +211,7 @@ export function ContactForm() {
               type="text"
               id="subject"
               name="subject"
+              maxLength={120}
               value={formData.subject}
               onChange={handleChange}
               placeholder="Collaboration / AI Agent Architecture / Recruiter Discussion"
@@ -211,11 +232,15 @@ export function ContactForm() {
               name="message"
               required
               rows={4}
+              maxLength={2500}
               value={formData.message}
               onChange={handleChange}
               placeholder="Outline project scope, team role, or inquiry details..."
               className="w-full px-4 py-2.5 rounded-lg bg-[#060609] border border-white/10 text-white placeholder-slate-400 text-xs sm:text-sm font-sans focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors resize-none"
             />
+            <div className="mt-1 text-right text-[10px] font-mono text-slate-500">
+              {formData.message.length} / 2500 characters
+            </div>
           </div>
 
           {/* Error notice */}
@@ -234,7 +259,7 @@ export function ContactForm() {
           >
             {status === "loading" ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin text-white" />
+                <Loader2 className="w-4 h-4 animate-spin text-black" />
                 <span>Transmitting Packet...</span>
               </>
             ) : (
@@ -246,7 +271,7 @@ export function ContactForm() {
           </button>
 
           <div className="pt-2 text-center text-[10px] font-mono text-slate-400">
-            Protected by client-side honeypot verification & TLS encryption.
+            Protected by client-side honeypot verification, input sanitization & TLS encryption.
           </div>
         </form>
       )}
