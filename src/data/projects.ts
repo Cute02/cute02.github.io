@@ -57,7 +57,7 @@ export const projects: Project[] = [
     tagline: "Emotion-detection app using BERT (GoEmotions).",
     category: "AI Agents & LLM",
     tags: ["NLP", "BERT", "Transformers", "Python"],
-    status: "In progress",
+    status: "Completed",
     featured: true,
     githubUrl: undefined, // Private / Coming soon
     problem:
