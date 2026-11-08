@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { projects, Project } from "@/data/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { ProjectModal } from "@/components/projects/ProjectModal";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { Terminal, Filter } from "lucide-react";
 
@@ -16,6 +17,7 @@ const CATEGORIES = [
 
 export function ProjectFilter() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === "All") return projects;
@@ -60,8 +62,11 @@ export function ProjectFilter() {
       {/* Grid of Filtered Projects */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProjects.map((project, idx) => (
-          <SectionReveal key={project.id} delay={idx * 0.1}>
-            <ProjectCard project={project} />
+          <SectionReveal key={project.id} delay={idx * 0.08}>
+            <ProjectCard
+              project={project}
+              onSelect={(p) => setSelectedProject(p)}
+            />
           </SectionReveal>
         ))}
       </div>
@@ -73,6 +78,12 @@ export function ProjectFilter() {
           <span>No project records matching category &quot;{selectedCategory}&quot;.</span>
         </div>
       )}
+
+      {/* In-page Interactive Case Study Modal */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </div>
   );
 }

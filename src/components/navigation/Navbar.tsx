@@ -2,24 +2,23 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, Cpu } from "lucide-react";
 
 const NAV_LINKS = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Stack", href: "/stack" },
-  { name: "Education", href: "/education" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "#hero", id: "hero" },
+  { name: "About", href: "#about", id: "about" },
+  { name: "Projects", href: "#projects", id: "projects" },
+  { name: "Stack", href: "#stack", id: "stack" },
+  { name: "Education", href: "#education", id: "education" },
+  { name: "Contact", href: "#contact", id: "contact" },
 ];
 
 export function Navbar() {
-  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,16 +28,36 @@ export function Navbar() {
         setScrollProgress(progress);
       }
       setScrolled(window.scrollY > 20);
+
+      // ScrollSpy: Determine active section based on scroll position
+      const scrollPos = window.scrollY + 120;
+      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+        const section = document.getElementById(NAV_LINKS[i].id);
+        if (section && section.offsetTop <= scrollPos) {
+          setActiveSection(NAV_LINKS[i].id);
+          break;
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [pathname]);
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top: targetTop, behavior: "smooth" });
+      }
+      setActiveSection(targetId);
+      setMobileMenuOpen(false);
+    }
+  };
 
   return (
     <>
@@ -68,9 +87,10 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo: MN. with telemetry sub-label */}
-            <Link
-              href="/"
-              className="group flex items-center gap-3 text-slate-100 hover:text-white transition-colors"
+            <a
+              href="#hero"
+              onClick={(e) => handleNavClick(e, "#hero")}
+              className="group flex items-center gap-3 text-slate-100 hover:text-white transition-colors cursor-pointer"
             >
               <div className="relative flex items-center justify-center w-9 h-9 rounded bg-surface-card border border-white/10 group-hover:border-cyan-500/50 transition-colors">
                 <span className="font-mono font-bold tracking-tight text-cyan-400 text-sm">
@@ -86,21 +106,19 @@ export function Navbar() {
                   SYS: ONLINE // 2026
                 </span>
               </div>
-            </Link>
+            </a>
 
             {/* Desktop Navigation Links */}
             <nav className="hidden md:flex items-center space-x-1 border border-white/10 rounded-full px-3 py-1.5 bg-surface/60 backdrop-blur-md">
               {NAV_LINKS.map((link) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
+                const isActive = activeSection === link.id;
 
                 return (
-                  <Link
+                  <a
                     key={link.href}
                     href={link.href}
-                    className={`relative px-4 py-1.5 text-xs font-mono uppercase tracking-wider transition-all duration-200 rounded-full ${
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`relative px-4 py-1.5 text-xs font-mono uppercase tracking-wider transition-all duration-200 rounded-full cursor-pointer ${
                       isActive
                         ? "text-cyan-400 font-bold"
                         : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
@@ -114,20 +132,21 @@ export function Navbar() {
                       />
                     )}
                     <span className="relative z-10">{link.name}</span>
-                  </Link>
+                  </a>
                 );
               })}
             </nav>
 
             {/* Right Action: Quick Status / Contact CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <Link
-                href="/contact"
-                className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,212,255,0.4)] hover:shadow-[0_0_20px_rgba(0,212,255,0.6)]"
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, "#contact")}
+                className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,212,255,0.4)] hover:shadow-[0_0_20px_rgba(0,212,255,0.6)] cursor-pointer"
               >
                 <span>INITIATE CONTACT</span>
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Hamburger Button */}
@@ -165,45 +184,40 @@ export function Navbar() {
                 <span>NAVIGATION MATRIX // SYSTEM ACTIVE</span>
               </div>
 
-              {NAV_LINKS.map((link, idx) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
+              {NAV_LINKS.map((link) => {
+                const isActive = activeSection === link.id;
 
                 return (
-                  <Link
+                  <a
                     key={link.href}
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between p-3 rounded-lg border text-sm font-mono tracking-wider transition-colors ${
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`flex items-center justify-between p-3 rounded-lg border text-sm font-mono tracking-wider transition-colors cursor-pointer ${
                       isActive
-                        ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-300 font-bold"
-                        : "border-white/5 bg-surface/40 text-slate-300 hover:border-white/20 hover:text-white"
+                        ? "bg-cyan-950/30 border-cyan-500/50 text-cyan-400 font-bold"
+                        : "border-white/5 bg-surface-card/60 text-slate-300 hover:border-white/20 hover:text-white"
                     }`}
                   >
-                    <span className="flex items-center gap-3">
-                      <span className="text-[10px] text-cyan-500 font-mono">
-                        [0{idx + 1}]
-                      </span>
-                      <span>{link.name}</span>
+                    <span>{link.name}</span>
+                    <span className="text-xs text-slate-500 font-mono">
+                      #{link.id}
                     </span>
-                    <ArrowUpRight className="w-4 h-4 text-slate-500" />
-                  </Link>
+                  </a>
                 );
               })}
             </div>
 
-            <div className="pt-6 border-t border-white/10 flex flex-col gap-3">
-              <Link
-                href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-3 rounded-lg bg-cyan-400 text-black font-mono font-bold text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(0,212,255,0.4)]"
+            <div className="pt-6 border-t border-white/10 space-y-3">
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, "#contact")}
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-colors shadow-cyan-sm cursor-pointer"
               >
-                Initiate Contact →
-              </Link>
-              <div className="text-center font-mono text-[11px] text-slate-500">
-                maryneha248@gmail.com · Ernakulam, Kerala
+                <span>INITIATE CONTACT DISPATCH</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+              <div className="text-center font-mono text-[10px] text-slate-500">
+                Mary Neha · Ernakulam, Kerala, India
               </div>
             </div>
           </motion.div>

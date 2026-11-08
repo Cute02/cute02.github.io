@@ -8,9 +8,10 @@ import { ArrowUpRight, Github, Lock, CheckCircle2, Clock } from "lucide-react";
 interface ProjectCardProps {
   project: Project;
   priority?: boolean;
+  onSelect?: (project: Project) => void;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -36,6 +37,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const handleMouseLeave = () => {
     setIsHovered(false);
     setTilt({ x: 0, y: 0 });
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (onSelect) {
+      e.preventDefault();
+      onSelect(project);
+    }
   };
 
   const isCompleted = project.status === "Completed";
@@ -93,13 +101,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Title */}
         <h3 className="text-xl font-bold tracking-tight text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between">
-          <Link
-            href={`/projects/${project.slug}`}
-            className="hover:underline flex items-center gap-2 focus:outline-none focus:ring-1 focus:ring-cyan-400 rounded"
-          >
-            <span>{project.title}</span>
-            <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+          {onSelect ? (
+            <button
+              type="button"
+              onClick={handleCardClick}
+              className="text-left hover:underline flex items-center gap-2 focus:outline-none focus:ring-1 focus:ring-cyan-400 rounded"
+            >
+              <span>{project.title}</span>
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          ) : (
+            <Link
+              href={`/projects/${project.slug}`}
+              className="hover:underline flex items-center gap-2 focus:outline-none focus:ring-1 focus:ring-cyan-400 rounded"
+            >
+              <span>{project.title}</span>
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          )}
         </h3>
 
         {/* Verified One-Line Summary */}
@@ -122,13 +141,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Card Footer: Action Links */}
       <div className="relative z-10 mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-        <Link
-          href={`/projects/${project.slug}`}
-          className="text-cyan-400 hover:text-cyan-300 transition-colors font-medium flex items-center gap-1.5"
-        >
-          <span>Deep Dive Case Study</span>
-          <ArrowUpRight className="w-3.5 h-3.5" />
-        </Link>
+        {onSelect ? (
+          <button
+            type="button"
+            onClick={handleCardClick}
+            className="text-cyan-400 hover:text-cyan-300 transition-colors font-medium flex items-center gap-1.5"
+          >
+            <span>Deep Dive Case Study</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </button>
+        ) : (
+          <Link
+            href={`/projects/${project.slug}`}
+            className="text-cyan-400 hover:text-cyan-300 transition-colors font-medium flex items-center gap-1.5"
+          >
+            <span>Deep Dive Case Study</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        )}
 
         {project.githubUrl ? (
           <a

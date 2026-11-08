@@ -76,6 +76,7 @@ export function CinematicHero() {
 
   return (
     <section
+      id="hero"
       ref={containerRef}
       className="relative min-h-screen w-full flex flex-col justify-between pt-20 pb-6 overflow-hidden bg-[#050608]"
     >
@@ -142,21 +143,21 @@ export function CinematicHero() {
           <PhotoPlaceholder />
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/projects"
-              className="group relative inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,212,255,0.45)] hover:shadow-[0_0_30px_rgba(0,212,255,0.7)]"
+            <a
+              href="#projects"
+              className="group relative inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,212,255,0.45)] hover:shadow-[0_0_30px_rgba(0,212,255,0.7)] cursor-pointer"
             >
               <span>Explore Projects</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            </a>
 
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-slate-200 border border-white/15 hover:border-cyan-400/60 hover:text-white bg-surface-card/70 backdrop-blur-md transition-all hover:bg-white/5"
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider text-slate-200 border border-white/15 hover:border-cyan-400/60 hover:text-white bg-surface-card/70 backdrop-blur-md transition-all hover:bg-white/5 cursor-pointer"
             >
               <span>Initiate Contact</span>
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            </Link>
+            </a>
           </div>
         </motion.div>
       </div>

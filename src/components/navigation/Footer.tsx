@@ -44,52 +44,52 @@ export function Footer() {
             </div>
             <ul className="space-y-2 text-xs font-mono">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                <a
+                  href="#hero"
+                  className="hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-pointer"
                 >
                   <span className="text-cyan-500/60">01.</span> Home
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                <a
+                  href="#about"
+                  className="hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-pointer"
                 >
-                  <span className="text-cyan-500/60">02.</span> About & Philosophy
-                </Link>
+                  <span className="text-cyan-500/60">02.</span> About &amp; Philosophy
+                </a>
               </li>
               <li>
-                <Link
-                  href="/projects"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                <a
+                  href="#projects"
+                  className="hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-pointer"
                 >
-                  <span className="text-cyan-500/60">03.</span> Projects & Case Studies
-                </Link>
+                  <span className="text-cyan-500/60">03.</span> Projects &amp; Case Studies
+                </a>
               </li>
               <li>
-                <Link
-                  href="/stack"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                <a
+                  href="#stack"
+                  className="hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-pointer"
                 >
                   <span className="text-cyan-500/60">04.</span> Technology Stack
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  href="/education"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                <a
+                  href="#education"
+                  className="hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-pointer"
                 >
-                  <span className="text-cyan-500/60">05.</span> Education & Accolades
-                </Link>
+                  <span className="text-cyan-500/60">05.</span> Education &amp; Accolades
+                </a>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                <a
+                  href="#contact"
+                  className="hover:text-cyan-400 transition-colors flex items-center gap-2 cursor-pointer"
                 >
                   <span className="text-cyan-500/60">06.</span> Contact Terminal
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

@@ -10,10 +10,10 @@ interface Chapter {
 }
 
 const CHAPTERS: Chapter[] = [
-  { id: "agents", number: "01", name: "AI AGENTS", targetId: "chapter-agents" },
-  { id: "nlp", number: "02", name: "NLP & BERT", targetId: "chapter-nlp" },
-  { id: "ml", number: "03", name: "SUPERVISED ML", targetId: "chapter-ml" },
-  { id: "iot", number: "04", name: "IOT EDGE", targetId: "chapter-iot" },
+  { id: "about", number: "01", name: "ABOUT", targetId: "about" },
+  { id: "projects", number: "02", name: "PROJECTS", targetId: "projects" },
+  { id: "delulu", number: "03", name: "DELULU AGENT", targetId: "delulu" },
+  { id: "stack", number: "04", name: "TECH STACK", targetId: "stack" },
 ];
 
 interface ChapterScrubberProps {
