@@ -101,18 +101,6 @@ export const achievementsList: AchievementItem[] = [
     statusBadge: "Verified Participant",
   },
   {
-    // TODO: confirm Google Startup Buildathon line (include only as "Applied" if Neha confirms)
-    id: "google-startup-buildathon",
-    title: "Google Startup Buildathon India 2026",
-    organization: "Google for Startups India",
-    year: "2026",
-    type: "Application",
-    description:
-      "Collaborative project application submitted with a teammate for the Google Startup Buildathon India 2026 initiative.",
-    statusBadge: "Applied (Pending Confirmation)",
-    requiresConfirmation: true,
-  },
-  {
     id: "academic-distinction-10",
     title: "Academic Distinction — Class X (95.6%)",
     organization: "Marello Public School",

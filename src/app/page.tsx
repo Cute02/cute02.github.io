@@ -25,7 +25,6 @@ import {
   Activity,
   Cpu,
   Code2,
-  AlertCircle,
   FileBadge,
   Sparkles,
 } from "lucide-react";
@@ -465,14 +464,6 @@ export default function SinglePagePortfolio() {
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                       {item.description}
                     </p>
-
-                    {item.requiresConfirmation && (
-                      // TODO: confirm Google Startup Buildathon line
-                      <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-amber-400/90 bg-amber-950/20 p-2 rounded border border-amber-500/20">
-                        <AlertCircle className="w-3 h-3 shrink-0" />
-                        <span>Note: Marked as &apos;Applied&apos; pending final confirmation.</span>
-                      </div>
-                    )}
                   </div>
                 </SectionReveal>
               ))}

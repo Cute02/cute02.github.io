@@ -86,8 +86,7 @@ This compiles and generates an optimized, standalone static site in the `out/` f
 | Placeholder Code Marker | File Location | Purpose & Next Steps |
 | :--- | :--- | :--- |
 | `TODO: add photo` | `src/components/hero/PhotoPlaceholder.tsx` | Place your official photo as `public/photo.jpg`. Until then, an explicit cyber placeholder displays. |
-| `TODO: confirm Open to opportunities badge` | `src/app/contact/page.tsx` | Hidden until confirmed by Neha. Uncomment badge block once confirmed. |
-| `TODO: confirm Google Startup Buildathon line` | `src/data/education.ts` | Displayed as "Applied (Pending Confirmation)". Update to Verified once approved. |
+| `TODO: confirm Open to opportunities badge` | `src/app/page.tsx` | Hidden until confirmed by Neha. Uncomment badge block once confirmed. |
 
 ### Verified Facts Included
 - **Display Name**: Mary Neha
@@ -99,7 +98,6 @@ This compiles and generates an optimized, standalone static site in the `out/` f
   - Secondary Education (Class X), Marello Public School (2024, 95.6% Distinction)
 - **Achievements**:
   - Participant, Buildathon conducted by HireD and Brototype (2026)
-  - Applicant, Google Startup Buildathon India 2026 (Applied)
 - **Projects**:
   1. *Delulu*: Text-to-SQL AI Agent (In progress)
   2. *Mitra*: Emotion-detection app using BERT GoEmotions (In progress)
