@@ -11,7 +11,7 @@ export function PhotoPlaceholder() {
   return (
     <div className="relative group flex flex-col items-center">
       {/* Outer Rotating Glowing Ring */}
-      <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-[2px] bg-gradient-to-tr from-cyan-500/70 via-cyan-400/20 to-transparent shadow-[0_0_20px_rgba(0,212,255,0.25)] transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(0,212,255,0.4)]">
+      <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full p-[3px] bg-gradient-to-tr from-cyan-500/70 via-cyan-400/20 to-transparent shadow-[0_0_30px_rgba(0,212,255,0.35)] transition-all duration-300 group-hover:shadow-[0_0_50px_rgba(0,212,255,0.55)]">
         {/* Inner Circle Frame */}
         <div className="w-full h-full rounded-full bg-[#07090e] border border-white/10 flex flex-col items-center justify-center overflow-hidden relative">
           {!imageError ? (
@@ -45,9 +45,9 @@ export function PhotoPlaceholder() {
         {/* Status indicator dot */}
         <div
           title="Profile Matrix Slot"
-          className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-cyan-400 border-2 border-[#050608] flex items-center justify-center shadow-cyan-sm"
+          className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-cyan-400 border-2 border-[#050608] flex items-center justify-center shadow-cyan-sm"
         >
-          <Sparkles className="w-2 h-2 text-black" />
+          <Sparkles className="w-3 h-3 text-black" />
         </div>
       </div>
 
